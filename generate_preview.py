@@ -9,9 +9,23 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def generate_preview():
     data = request.json
     niche = data.get("niche", "your niche")
-
-    prompt = f"Act as a branding expert. Based on the niche '{niche}', give one short brand insight (2-3 sentences) and list 3 emotion tags this audience is likely feeling. Format the response as: Insight: ... Tags: [Tag1, Tag2, Tag3]"
-
+    product = data.get("product", "a product or offer")
+    vibe = data.get("vibe", None)
+    
+    prompt = f"""Act as a branding expert.
+    Target Audience: {niche}
+    Product or Offer: {product}"""
+    
+    if vibe:
+        prompt += f"\nBrand Vibe: {vibe}"
+    
+    prompt += """
+    Give one short brand insight (2-3 sentences) and list 3 emotion tags this audience is likely feeling.
+    Format the response as:
+    Insight: ...
+    Tags: [Tag1, Tag2, Tag3]
+    """
+    
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4",
