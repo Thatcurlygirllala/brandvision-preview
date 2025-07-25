@@ -36,8 +36,8 @@ def generate_preview():
             temperature=0.7,
         )
 
-        content = response['choices'][0]['message']['content']
-
+        content = response.choices[0].message.content
+        
         # Split result into insight and tags
         if "Tags:" in content:
             insight_part, tag_part = content.split("Tags:")
