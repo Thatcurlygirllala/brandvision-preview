@@ -28,6 +28,8 @@ def generate_preview():
     Tags: [Tag1, Tag2, Tag3]
     """
     
+    print("[INFO] Prompt sent to OpenAI:\n", prompt)
+    
     try:
         response = openai.chat.completions.create(
             model="gpt-4",
@@ -37,6 +39,7 @@ def generate_preview():
         )
 
         content = response.choices[0].message.content
+        print("[INFO] Response from OpenAI:\n", content)
         
         # Split result into insight and tags
         if "Tags:" in content:
